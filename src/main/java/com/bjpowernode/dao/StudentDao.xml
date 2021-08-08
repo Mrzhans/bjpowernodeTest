@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.dao.StudentDao">
+    <select id="selectById" resultType="com.bjpowernode.domain.Student">
+        select *from student where no = #{id}
+    </select>
+
+    <select id="selectNameAndClass" resultType="Map">
+        select s.name as sname,c.name as cname
+        from student s
+        join classroom c
+        on s.classroomid = c.id
+    </select>
+
+    <select id="selectByForEach" resultType="com.bjpowernode.domain.Student">
+        select *from student where no in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <insert id="save" parameterType="com.bjpowernode.domain.Student">
+        insert into student values(#{no},#{name},#{age})
+    </insert>
+</mapper>
